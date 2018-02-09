@@ -11,7 +11,7 @@ Simply include the I2C_DMAC.h file the beginning of the sketch:
 
 #include <I2C_DMAC.h>
 
-The I2C_DMAC object is created (instantiated) automatically and the oject can be called using the I2C prefix, for example:
+The I2C_DMAC object is created (instantiated) automatically and the object can be called using the I2C prefix, for example:
 
 I2C.begin()
 
