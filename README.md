@@ -1,6 +1,13 @@
 # I2C_DMAC
 Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Access Controller (DMAC).
 
+### __Arduino Compatibility__
+
+- Arduino/Genuino Zero
+- Arduino Zero Pro
+- Arduino M0 Pro
+- Arduino M0
+
 ### __Installation__
 
 After download simply un-zip the file and place the DMAC and I2C_DMAC directories in your ...Arduino/libraries folder. The Arduino folder is the one where your sketches are usually located.
