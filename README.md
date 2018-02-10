@@ -9,11 +9,11 @@ After download simply un-zip the file and place the DMAC and I2C_DMAC directorie
 
 Simply include the I2C_DMAC.h file the beginning of the sketch:
 
-_#include <I2C_DMAC.h>_
+**_#include <I2C_DMAC.h>_**
 
 The I2C_DMAC object is created (instantiated) automatically and the object can be called using the I2C prefix, for example:
 
-_I2C.begin();_
+**_I2C.begin();_**
 
 The I2C_DMAC library's functions operate in the following way:
 
@@ -23,20 +23,20 @@ All the other read and write functions are just a combination of the these three
 
 The write functions allow for the transmission of the device address, plus the following options:
 
-_Device Address->Data->Data Count (bytes)_
-_Device Address->8-bit Register Address_
-_Device Address->16-bit Register Address_
-_Device Address->8-bit Register Address->1 Byte Data_
-_Device Address->8-bit Register Address->Data->Data Count (bytes)_
-_Device Address->16-bit Register Address->1 Byte Data_
-_Device Address->16-bit Register Address->Data->Data Count (bytes)_
+Device Address->Data->Data Count (bytes)
+Device Address->8-bit Register Address
+Device Address->16-bit Register Address
+Device Address->8-bit Register Address->1 Byte Data
+Device Address->8-bit Register Address->Data->Data Count (bytes)
+Device Address->16-bit Register Address->1 Byte Data_
+Device Address->16-bit Register Address->Data->Data Count (bytes)
 
 The 8-bit register address is used to access most small I2C devices, such as sensors, while the 16-bit resgister address can be used to access I2C EEPROM devices.
 
 The read functions allow for the transmission of the device address, plus the reception of the following options:
 
-_Device Address->1 Byte Data
-Device Address->Data->Data Count (bytes)_
+Device Address->1 Byte Data
+Device Address->Data->Data Count (bytes)
 
 Single bytes of data are handled by the library, meaning that you can simply enter constants as a single byte of data without having to allocate any memory. This is useful for configuring an I2C device.
 
@@ -50,7 +50,7 @@ It's possible to initialise the DMAC only one time and then continuouly call the
 
 To allow the sketch to check if the DMAC read or write operation is complete it's necessary to poll the respective busy flags:
 
-_while(I2C.writeBusy);_
+**_while(I2C.writeBusy);_**
 
 It's also possible to allocate callback functions that are executed when a read or write has completed, or when an error occurs.
 
