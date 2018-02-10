@@ -1,11 +1,11 @@
 # I2C_DMAC
 Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Access Controller (DMAC).
 
-###__Installation__
+### __Installation__
 
 After download simply un-zip the file and place the DMAC and I2C_DMAC directories in your ...Arduino/libraries folder. The Arduino folder is the one where your sketches are usually located.
 
-###__Usage__
+### __Usage__
 
 Simply include the I2C_DMAC.h file the beginning of the sketch:
 
@@ -35,8 +35,8 @@ The 8-bit register address is used to access most small I2C devices, such as sen
 
 The read functions allow for the transmission of the device address, plus the reception of the following options:
 
-_Device Address->1 Byte Data_
-_Device Address->Data->Data Count (bytes)_
+_Device Address->1 Byte Data
+Device Address->Data->Data Count (bytes)_
 
 Single bytes of data are handled by the library, meaning that you can simply enter constants as a single byte of data without having to allocate any memory. This is useful for configuring an I2C device.
 
@@ -56,6 +56,6 @@ It's also possible to allocate callback functions that are executed when a read 
 
 The DMAC_Handler() and SERCOM3_Handler are provided as weak linker symbols allowing them to be overriden in your sketch for inclusion of your own handler functions, should that be necessary.
 
-###__Example Code__
+### __Example Code__
 
 The examples directory includes I2C_DMAC example code for the MPU6050 gyroscope/accelerometer device.
