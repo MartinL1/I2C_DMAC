@@ -24,11 +24,17 @@ All the other read and write functions are just a combination of the these three
 The write functions allow for the transmission of the device address, plus the following options:
 
 Device Address --> Data-Data Count (bytes)
+
 Device Address-8 --> bit Register Address
+
 Device Address --> 16-bit Register Address
+
 Device Address --> 8-bit Register Address --> 1 Byte Data
+
 Device Address --> 8-bit Register Address --> Data --> Data Count (bytes)
+
 Device Address --> 16-bit Register Address --> 1 Byte Data_
+
 Device Address --> 16-bit Register Address --> Data --> Data Count (bytes)
 
 The 8-bit register address is used to access most small I2C devices, such as sensors, while the 16-bit resgister address can be used to access I2C EEPROM devices.
@@ -36,6 +42,7 @@ The 8-bit register address is used to access most small I2C devices, such as sen
 The read functions allow for the transmission of the device address, plus the reception of the following options:
 
 Device Address --> 1 Byte Data
+
 Device Address --> Data --> Data Count (bytes)
 
 Single bytes of data are handled by the library, meaning that you can simply enter constants as a single byte of data without having to allocate any memory. This is useful for configuring an I2C device.
