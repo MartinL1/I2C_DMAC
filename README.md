@@ -13,7 +13,7 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 - Arduino M0 Pro
 - Arduino M0
 - Arduino MKR Series
-- Support for SAMD51 microcontrollers
+- Support for SAMD51 microcontrollers using Adafruit's Metro/Feather M4 core code
 
 ### __Installation__
 
