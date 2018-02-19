@@ -58,7 +58,7 @@ A block of data can be a simple array and needs to be declared and "in scope" fo
 
 Note that the I2C_DMAC doesn't use a ring buffer like the standard Wire library, it simply allows you to send and receive data from memory already allocated in your program. This also makes it more efficient as it isn't necessary to pull data off the ring buffer, the data is instead transfer directly to where you specify.
 
-By default the DMAC uses channel 0 to write and 1 to read, but it's possible to select your DMAC channels of choice (0-11 and 0-31 on SAMD51). It's also possible to set the priority level (0 lowest-3 highest). This is only necessary if you're using the DMAC channels for other purposes as well.
+By default the DMAC uses channel 0 to write and 1 to read, but it's possible to select your DMAC channels of choice (0-11 on SAMD21 based boards and 0-31 on the SAMD51). It's also possible to set the priority level (0 lowest-3 highest). This is only necessary if you're using the DMAC channels for other purposes as well.
 
 It's possible to initialise the DMAC only one time and then continuouly call the read() and write() functions in the loop() to initiate multiple transfers. In other words it isn't necessary to set-up the DMAC each time if you're doing a repeated operation.
 
