@@ -3,8 +3,8 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 
 ### __Version__
 
-- Version V1.0.0 Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
-- Version V1.0.0 Intial release
+- Version V1.0.0: Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
+- Version V1.0.0: Intial release
 
 ### __Arduino Compatibility__
 
