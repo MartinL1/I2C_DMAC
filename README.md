@@ -1,12 +1,19 @@
 # I2C_DMAC
 Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Access Controller (DMAC).
 
+### __Version__
+
+- Version V1.0.0 Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
+- Version V1.0.0 Intial release
+
 ### __Arduino Compatibility__
 
 - Arduino/Genuino Zero
 - Arduino Zero Pro
 - Arduino M0 Pro
 - Arduino M0
+- Arduino MKR Series
+- Support for SAMD51 microcontrollers
 
 ### __Installation__
 
@@ -62,6 +69,8 @@ To allow the sketch to check if the DMAC read or write operation is complete it'
 It's also possible to allocate callback functions that are executed when a read or write has completed, or when an error occurs.
 
 The DMAC_Handler() and SERCOM3_Handler are provided as weak linker symbols allowing them to be overriden in your sketch for inclusion of your own handler functions, should that be necessary.
+
+The latest version includes support for mulitple I2C instances provided the instances are assigned different DMAC channels. An demonstration sketch using two MPU6050 gyroscope/accelerometer devices is included in the example code.
 
 ### __Example Code__
 
