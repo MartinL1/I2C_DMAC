@@ -70,7 +70,7 @@ It's also possible to allocate callback functions that are executed when a read 
 
 The DMAC_Handler() and SERCOM3_Handler are provided as weak linker symbols allowing them to be overriden in your sketch for inclusion of your own handler functions, should that be necessary.
 
-The latest version includes support for mulitple I2C instances provided the instances are assigned different DMAC channels. An demonstration sketch using two MPU6050 gyroscope/accelerometer devices is included in the example code.
+The latest version includes support for mulitple I2C instances, provided the instances are assigned different DMAC channels. A demonstration sketch: "MPU6050_Gyroscope_V2.ino", using two MPU6050 gyroscope/accelerometer devices is included in the example code.
 
 ### __Example Code__
 
