@@ -1,5 +1,5 @@
 /*
-  I2C_DMAC is a non-blocking I2C library that uses SERCOM3 in 
+  I2C_DMAC is a non-blocking I2C library that uses a SERCOM in 
 	conjunction with the Direct Memory Access Controller (DMAC).
 	
 	Copyright (C) Martin Lindupp 2018
