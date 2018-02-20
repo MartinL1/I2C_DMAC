@@ -6,6 +6,7 @@
 	
 	V1.0.0 -- Initial release 									
 	V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
+	V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
 
 	The MIT License (MIT)
 
@@ -126,8 +127,11 @@ void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode) 				// Set baud rat
 {  
 	this->regAddrMode = regAddrMode;
 	
-	pinPeripheral(pinSDA, PIO_SERCOM);	 // Set-up the SDA pin as the I2C data pin
-	pinPeripheral(pinSCL, PIO_SERCOM);	 // Set-up the SCL pin as the I2C clock pin
+	// Enable the SCL and SDA lines on the sercom 
+  PORT->Group[g_APinDescription[SCL].ulPort].PINCFG[g_APinDescription[SCL].ulPin].bit.PMUXEN = 1;  
+  PORT->Group[g_APinDescription[SDA].ulPort].PINCFG[g_APinDescription[SDA].ulPin].bit.PMUXEN = 1;
+  PORT->Group[g_APinDescription[SDA].ulPort].PMUX[g_APinDescription[SDA].ulPin >> 1].reg = 
+		PORT_PMUX_PMUXO(PIO_SERCOM) | PORT_PMUX_PMUXE(PIO_SERCOM);
 			
 	if (!DMAC->CTRL.bit.DMAENABLE)			 // Enable the DMAC, if it hasn't already been enabled
 	{
@@ -216,6 +220,13 @@ void I2C_DMAC::end()
 			break;																							// Escape from the (for) loop
 		}
 	}
+	
+	// Return the SCL and SDA lines on the sercom to GPIO
+  PORT->Group[g_APinDescription[SCL].ulPort].PINCFG[g_APinDescription[SCL].ulPin].bit.PMUXEN = 0;  
+  PORT->Group[g_APinDescription[SDA].ulPort].PINCFG[g_APinDescription[SDA].ulPin].bit.PMUXEN = 0;
+  PORT->Group[g_APinDescription[SDA].ulPort].PMUX[g_APinDescription[SDA].ulPin >> 1].reg = 
+		PORT_PMUX_PMUXO(0) | PORT_PMUX_PMUXE(0);
+	
 	sercom->I2CM.CTRLA.bit.ENABLE = 0;            															// Disable the I2C master mode
   while (sercom->I2CM.SYNCBUSY.bit.ENABLE);     															// Wait for synchronization
 	sercom->I2CM.CTRLA.bit.SWRST = 1;                                           // Reset SERCOM3
