@@ -5,7 +5,8 @@
 	Copyright (C) Martin Lindupp 2018
 	
 	V1.0.0 -- Initial release
-	V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
+	V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances
+	V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
 
   The MIT License (MIT)
 
@@ -32,7 +33,6 @@
 #define _I2C_DMAC_h
 
 #include <Arduino.h>
-#include <wiring_private.h>
 #include <DMAC.h>
 
 enum { REG_ADDR_8BIT = 1, REG_ADDR_16BIT };										// Register address mode definitions, 8-bit address or 16-bit address
