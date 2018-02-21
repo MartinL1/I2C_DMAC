@@ -7,6 +7,7 @@
 	V1.0.0 -- Initial release 									
 	V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
 	V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
+	V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
 
 	The MIT License (MIT)
 
@@ -33,6 +34,10 @@
 
 volatile I2C_DMAC* I2C_DMAC::i2cDmacPtrs[SERCOM_INST_NUM];		// Array of pointer to each instance (object) of this class
 volatile uint8_t I2C_DMAC::instanceCounter;										// Number of instances (objects) of this class
+
+volatile dmacdescriptor wrb[DMAC_CH_NUM] __attribute__ ((aligned (16)));						// DMAC write back descriptor array
+dmacdescriptor descriptor_section[DMAC_CH_NUM] __attribute__ ((aligned (16)));			// DMAC channel descriptor array
+dmacdescriptor descriptor __attribute__ ((aligned (16)));														// DMAC place holder descriptor
 
 //
 // Initialisation section: prep the the port pins, SERCOM and the DMAC
