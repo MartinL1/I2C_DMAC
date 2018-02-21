@@ -3,7 +3,8 @@
 	
 	Copyright (C) Martin Lindupp 2018
 	
-	Initial release -- V1.0.0 
+	V1.0.0 -- Initial release
+	V1.0.1 -- Include SAMD51 support for 32 channels
   
 	The MIT License (MIT)
 	
@@ -37,9 +38,9 @@ typedef struct {											// DMAC descriptor structure
 	uint32_t descaddr;
 } dmacdescriptor ;
 
-static volatile dmacdescriptor wrb[12] __attribute__ ((aligned (16)));						// DMAC write back descriptor array
-static dmacdescriptor descriptor_section[12] __attribute__ ((aligned (16)));			// DMAC channel descriptor array
-static dmacdescriptor descriptor __attribute__ ((aligned (16)));									// DMAC place holder descriptor
+static volatile dmacdescriptor wrb[DMAC_CH_NUM] __attribute__ ((aligned (16)));						// DMAC write back descriptor array
+static dmacdescriptor descriptor_section[DMAC_CH_NUM] __attribute__ ((aligned (16)));			// DMAC channel descriptor array
+static dmacdescriptor descriptor __attribute__ ((aligned (16)));													// DMAC place holder descriptor
 
 #endif
 
