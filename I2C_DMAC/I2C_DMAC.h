@@ -7,6 +7,7 @@
 	V1.0.0 -- Initial release
 	V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances
 	V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
+	V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
 
   The MIT License (MIT)
 
