@@ -3,6 +3,7 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 
 ### __Version__
 
+- Version V1.1.2 -- Allow other classes to simultaneously use other DMAC channels
 - Version V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
 - Version V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
 - Version V1.0.0 -- Intial release
