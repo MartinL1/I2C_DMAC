@@ -133,9 +133,9 @@ void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode) 				// Set baud rat
 	this->regAddrMode = regAddrMode;
 	
 	// Enable the SCL and SDA lines on the sercom 
-  PORT->Group[g_APinDescription[SCL].ulPort].PINCFG[g_APinDescription[SCL].ulPin].bit.PMUXEN = 1;  
-  PORT->Group[g_APinDescription[SDA].ulPort].PINCFG[g_APinDescription[SDA].ulPin].bit.PMUXEN = 1;
-  PORT->Group[g_APinDescription[SDA].ulPort].PMUX[g_APinDescription[SDA].ulPin >> 1].reg = 
+  PORT->Group[g_APinDescription[pinSCL].ulPort].PINCFG[g_APinDescription[pinSCL].ulPin].bit.PMUXEN = 1;  
+  PORT->Group[g_APinDescription[pinSDA].ulPort].PINCFG[g_APinDescription[pinSDA].ulPin].bit.PMUXEN = 1;
+  PORT->Group[g_APinDescription[pinSDA].ulPort].PMUX[g_APinDescription[pinSDA].ulPin >> 1].reg = 
 		PORT_PMUX_PMUXO(PIO_SERCOM) | PORT_PMUX_PMUXE(PIO_SERCOM);
 			
 	if (!DMAC->CTRL.bit.DMAENABLE)			 // Enable the DMAC, if it hasn't already been enabled
@@ -227,9 +227,9 @@ void I2C_DMAC::end()
 	}
 	
 	// Return the SCL and SDA lines on the sercom to GPIO
-  PORT->Group[g_APinDescription[SCL].ulPort].PINCFG[g_APinDescription[SCL].ulPin].bit.PMUXEN = 0;  
-  PORT->Group[g_APinDescription[SDA].ulPort].PINCFG[g_APinDescription[SDA].ulPin].bit.PMUXEN = 0;
-  PORT->Group[g_APinDescription[SDA].ulPort].PMUX[g_APinDescription[SDA].ulPin >> 1].reg = 
+  PORT->Group[g_APinDescription[pinSCL].ulPort].PINCFG[g_APinDescription[pinSCL].ulPin].bit.PMUXEN = 0;  
+  PORT->Group[g_APinDescription[pinSDA].ulPort].PINCFG[g_APinDescription[pinSDA].ulPin].bit.PMUXEN = 0;
+  PORT->Group[g_APinDescription[pinSDA].ulPort].PMUX[g_APinDescription[pinSDA].ulPin >> 1].reg = 
 		PORT_PMUX_PMUXO(0) | PORT_PMUX_PMUXE(0);
 	
 	sercom->I2CM.CTRLA.bit.ENABLE = 0;            															// Disable the I2C master mode
