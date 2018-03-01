@@ -8,6 +8,7 @@
 	V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
 	V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
 	V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
+	V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
 
 	The MIT License (MIT)
 
@@ -314,13 +315,12 @@ void I2C_DMAC::setRegAddrMode(uint8_t regAddrMode)
 // Generic initialise write DMAC transfer function
 void I2C_DMAC::initWriteBytes(uint8_t devAddress, uint16_t regAddress, uint8_t* data, uint8_t count, uint8_t regAddrLength)
 {
-	this->devAddress = devAddress;							// Copy the device address, plus write byte count and register address length
-	writeCount = count;
-	this->regAddrLength = regAddrLength;
-	
 	while (sercom->I2CM.STATUS.bit.BUSSTATE == 0x2);    					// Wait while the I2C bus is BUSY
 	if (sercom->I2CM.STATUS.bit.BUSSTATE == 0x1)									// Check if the I2C bus state is at IDLE
 	{
+		this->devAddress = devAddress;						// Copy the device address, plus write byte count and register address length
+		writeCount = count;
+		this->regAddrLength = regAddrLength;
 #ifdef __SAMD51__
 		// Set the DMAC level, trigger source and trigger action to burst (trigger for every byte transmitted)
 		DMAC->Channel[dmacWriteChannel].CHCTRLA.reg = DMAC_CHCTRLA_TRIGSRC(dmacWriteTrigger) | DMAC_CHCTRLA_TRIGACT_BURST; 
@@ -384,8 +384,12 @@ void I2C_DMAC::initWriteBytes(uint8_t devAddress, uint16_t regAddress, uint8_t* 
 
 void I2C_DMAC::initWriteByte(uint8_t devAddress, uint16_t regAddress, uint8_t data)
 {
-	this->data = data;
-	initWriteBytes(devAddress, regAddress, (uint8_t*)&this->data, 1, regAddrMode);	// Initialise DMAC write transfer: register address + 1 data byte
+	while (sercom->I2CM.STATUS.bit.BUSSTATE == 0x2);    					// Wait while the I2C bus is BUSY
+	if (sercom->I2CM.STATUS.bit.BUSSTATE == 0x1)									// Check if the I2C bus state is at IDLE
+	{
+		this->data = data;
+		initWriteBytes(devAddress, regAddress, (uint8_t*)&this->data, 1, regAddrMode);	// Initialise DMAC write transfer: register address + 1 data byte
+	}
 }
 
 void I2C_DMAC::initWriteRegAddr(uint8_t devAddress, uint16_t regAddress)
@@ -400,12 +404,11 @@ uint8_t I2C_DMAC::getData()
 
 void I2C_DMAC::initReadBytes(uint8_t devAddress, uint8_t* data, uint8_t count)		 // Initialise DMAC read transfer: count bytes of data
 {
-	this->devAddress = devAddress;																// Copy device address and read byte count
-	readCount = count;				
-
 	while (sercom->I2CM.STATUS.bit.BUSSTATE == 0x2);    					// Wait while the I2C bus is BUSY
 	if (sercom->I2CM.STATUS.bit.BUSSTATE == 0x1)									// Check if the I2C bus state is at IDLE
 	{
+		this->devAddress = devAddress;															// Copy device address and read byte count
+		readCount = count;
 #ifdef __SAMD51__
 		// Set the DMAC level, trigger source and trigger action to burst (trigger for every byte received)
 		DMAC->Channel[dmacReadChannel].CHCTRLA.reg = DMAC_CHCTRLA_TRIGSRC(dmacReadTrigger) | DMAC_CHCTRLA_TRIGACT_BURST; 
