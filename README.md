@@ -3,6 +3,7 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 
 ### __Version__
 
+- Version V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
 - Version V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
 - Version V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
 - Version V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
