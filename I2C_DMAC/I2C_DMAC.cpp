@@ -9,6 +9,7 @@
 	V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
 	V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
 	V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
+	V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
 
 	The MIT License (MIT)
 
@@ -633,6 +634,18 @@ void I2C_DMAC::SERCOM_IrqHandler()
 {
 	if (sercom->I2CM.INTFLAG.bit.ERROR && sercom->I2CM.INTENSET.bit.ERROR)
 	{
+#ifdef __SAMD51__
+		DMAC->Channel[dmacWriteChannel].CHCTRLA.bit.ENABLE = 0;				// Disable the DMAC write channel
+		DMAC->Channel[dmacReadChannel].CHCTRLA.bit.ENABLE = 0;				// Disable the DMAC read channel
+#else
+		DMAC->CHID.reg = DMAC_CHID_ID(dmacWriteChannel);              // Switch to the active DMAC write channel
+		DMAC->CHCTRLA.bit.ENABLE = 0;																	// Disable the DMAC write channel
+		DMAC->CHID.reg = DMAC_CHID_ID(dmacReadChannel);              	// Switch to the active DMAC read channel
+		DMAC->CHCTRLA.bit.ENABLE = 0;																	// Disable the DMAC read channel
+#endif
+		writeBusy = false;																						// Clear the write busy flag
+		readBusy = false;																							// Clear the read busy flag
+		
 		if (errorSercomCallback)																			// Check if there's a SERCOM3 error callback function
 		{
 			errorSercomCallback();																			// Call the SERCOM3 error callback function
