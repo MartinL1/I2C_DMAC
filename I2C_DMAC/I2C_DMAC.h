@@ -9,6 +9,7 @@
 	V1.1.1 -- Replaced pinPeripheral() function with port register manipulation
 	V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
 	V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
+	V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
 
   The MIT License (MIT)
 
