@@ -10,6 +10,7 @@
 	V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
 	V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
 	V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
+	V1.1.5 -- Activate internal pull-up resistors and increase driver strength
 
   The MIT License (MIT)
 
