@@ -10,6 +10,7 @@
 	V1.1.2 -- Allow other classes to simultaneously use remaining DMAC channels
 	V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
 	V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
+	V1.1.5 -- Activate internal pull-up resistors and increase driver strength
 
 	The MIT License (MIT)
 
@@ -134,9 +135,11 @@ void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode) 				// Set baud rat
 {  
 	this->regAddrMode = regAddrMode;
 	
-	// Enable the SCL and SDA lines on the sercom 
-  PORT->Group[g_APinDescription[pinSCL].ulPort].PINCFG[g_APinDescription[pinSCL].ulPin].bit.PMUXEN = 1;  
-  PORT->Group[g_APinDescription[pinSDA].ulPort].PINCFG[g_APinDescription[pinSDA].ulPin].bit.PMUXEN = 1;
+	// Enable the SCL and SDA pins on the sercom: includes increased driver strength, pull-up resistors and pin multiplexer
+	PORT->Group[g_APinDescription[pinSCL].ulPort].PINCFG[g_APinDescription[pinSCL].ulPin].reg =  
+		PORT_PINCFG_DRVSTR | PORT_PINCFG_PULLEN | PORT_PINCFG_PMUXEN;  
+  PORT->Group[g_APinDescription[pinSDA].ulPort].PINCFG[g_APinDescription[pinSDA].ulPin].reg = 
+		PORT_PINCFG_DRVSTR | PORT_PINCFG_PULLEN | PORT_PINCFG_PMUXEN;
   PORT->Group[g_APinDescription[pinSDA].ulPort].PMUX[g_APinDescription[pinSDA].ulPin >> 1].reg = 
 		PORT_PMUX_PMUXO(PIO_SERCOM) | PORT_PMUX_PMUXE(PIO_SERCOM);
 			
@@ -229,8 +232,8 @@ void I2C_DMAC::end()
 	}
 	
 	// Return the SCL and SDA lines on the sercom to GPIO
-  PORT->Group[g_APinDescription[pinSCL].ulPort].PINCFG[g_APinDescription[pinSCL].ulPin].bit.PMUXEN = 0;  
-  PORT->Group[g_APinDescription[pinSDA].ulPort].PINCFG[g_APinDescription[pinSDA].ulPin].bit.PMUXEN = 0;
+  PORT->Group[g_APinDescription[pinSCL].ulPort].PINCFG[g_APinDescription[pinSCL].ulPin].reg = 0;  
+  PORT->Group[g_APinDescription[pinSDA].ulPort].PINCFG[g_APinDescription[pinSDA].ulPin].reg = 0;
   PORT->Group[g_APinDescription[pinSDA].ulPort].PMUX[g_APinDescription[pinSDA].ulPin >> 1].reg = 
 		PORT_PMUX_PMUXO(0) | PORT_PMUX_PMUXE(0);
 	
