@@ -287,25 +287,17 @@ void I2C_DMAC::setClock(uint32_t baudrate)
 
 void I2C_DMAC::setWriteChannel(uint8_t channel)
 {
-#ifdef __SAMD51__
-	dmacWriteChannel = channel < 32 ? channel : dmacWriteChannel;			// Set the write DMAC channel, (default channel 0)
-#else
-	dmacWriteChannel = channel < 12 ? channel : dmacWriteChannel;			// Set the write DMAC channel, (default channel 0)
-#endif
+	dmacWriteChannel = channel < DMAC_CH_NUM ? channel : dmacWriteChannel;			// Set the write DMAC channel, (default channel 0)
 }
 
 void I2C_DMAC::setReadChannel(uint8_t channel)
 {
-#ifdef __SAMD51__
-	dmacReadChannel = channel < 32 ? channel : dmacReadChannel;				// Set the read DMAC channel, (default channel 1)
-#else
-	dmacReadChannel = channel < 12 ? channel : dmacReadChannel;				// Set the read DMAC channel, (default channel 1)
-#endif
+	dmacReadChannel = channel < DMAC_CH_NUM ? channel : dmacReadChannel;				// Set the read DMAC channel, (default channel 1)
 }
 
 void I2C_DMAC::setPriority(uint8_t priority)
 {
-	dmacPriority = priority < 4 ? priority : dmacPriority;						// Set the priority of both write and read channels (0 lowest, 3 highest)
+	dmacPriority = priority < DMAC_LVL_NUM ? priority : dmacPriority;						// Set the priority of both write and read channels (0 lowest, 3 highest)
 }
 
 //
