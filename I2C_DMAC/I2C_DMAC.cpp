@@ -11,6 +11,7 @@
 	V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
 	V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
 	V1.1.5 -- Activate internal pull-up resistors and increase driver strength
+	V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
 
 	The MIT License (MIT)
 
@@ -131,8 +132,13 @@ I2C_DMAC::I2C_DMAC(SERCOM* sercomClass, uint8_t pinSDA, uint8_t pinSCL) : // Con
 	}
 }																																		
 
-void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode) 				// Set baud rate and the register address mode: 8-bit or 16-bit				
+void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode, EPioType ulPeripheral) 		// Set baud rate and the register address mode: 8-bit or 16-bit				
 {  
+	if (ulPeripheral != PIO_SERCOM && ulPeripheral != PIO_SERCOM_ALT)		// Check that the peripheral mutliplexer is set to a SERCOM or SERCOM_ALT
+	{
+		return;
+	}
+	
 	this->regAddrMode = regAddrMode;
 	
 	// Enable the SCL and SDA pins on the sercom: includes increased driver strength, pull-up resistors and pin multiplexer
@@ -141,7 +147,7 @@ void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode) 				// Set baud rat
   PORT->Group[g_APinDescription[pinSDA].ulPort].PINCFG[g_APinDescription[pinSDA].ulPin].reg = 
 		PORT_PINCFG_DRVSTR | PORT_PINCFG_PULLEN | PORT_PINCFG_PMUXEN;
   PORT->Group[g_APinDescription[pinSDA].ulPort].PMUX[g_APinDescription[pinSDA].ulPin >> 1].reg = 
-		PORT_PMUX_PMUXO(PIO_SERCOM) | PORT_PMUX_PMUXE(PIO_SERCOM);
+		PORT_PMUX_PMUXO(ulPeripheral) | PORT_PMUX_PMUXE(ulPeripheral);
 			
 	if (!DMAC->CTRL.bit.DMAENABLE)			 // Enable the DMAC, if it hasn't already been enabled
 	{
@@ -200,7 +206,7 @@ void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode) 				// Set baud rat
 
 void I2C_DMAC::begin(uint32_t baudrate)
 {
-	begin(baudrate, REG_ADDR_8BIT);			// Set baud rate, but default to 8-bit register address mode
+	begin(baudrate, REG_ADDR_8BIT, PIO_SERCOM);			// Set baud rate, but default to 8-bit register address mode
 }
 
 void I2C_DMAC::begin()
@@ -710,10 +716,6 @@ void DMAC_Handler() 															// The DMAC_Handler() ISR
 	{
 		I2C.SERCOM_IrqHandler();
   }
-	#ifdef __SAMD51__
-	#else
-	
-	#endif
 #endif
 
 #if WIRE_INTERFACES_COUNT > 1
