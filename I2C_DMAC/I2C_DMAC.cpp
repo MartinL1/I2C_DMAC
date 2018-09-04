@@ -191,7 +191,7 @@ void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode, EPioType ulPeripher
   sercom->I2CM.CTRLA.reg = SERCOM_I2CM_CTRLA_MODE(I2C_MASTER_OPERATION);   			// Set I2C master mode                     
   sercom->I2CM.CTRLB.reg = SERCOM_I2CM_CTRLB_SMEN;   										  			// Enable Smart Mode
 #if __SAMD51__
-  sercom->I2CM.BAUD.bit.BAUD = SERCOM_48M_REF / (2 * baudrate) - 7;      				// Set I2C master SCL baud rate
+  sercom->I2CM.BAUD.bit.BAUD = SERCOM_FREQ_REF / (2 * baudrate) - 7;      			// Set I2C master SCL baud rate
 #else
 	sercom->I2CM.BAUD.bit.BAUD = SystemCoreClock / (2 * baudrate) - 7;      			// Set I2C master SCL baud rate
 #endif
@@ -283,7 +283,7 @@ void I2C_DMAC::setClock(uint32_t baudrate)
 	sercom->I2CM.CTRLA.bit.ENABLE = 0;            													// Disable SERCOM3 in I2C master mode
   while (sercom->I2CM.SYNCBUSY.bit.ENABLE);     													// Wait for synchronization
 #if __SAMD51__
-  sercom->I2CM.BAUD.bit.BAUD = SERCOM_48M_REF / (2 * baudrate) - 7;      				// Set I2C master SCL baud rate
+  sercom->I2CM.BAUD.bit.BAUD = SERCOM_FREQ_REF / (2 * baudrate) - 7;      			// Set I2C master SCL baud rate
 #else
 	sercom->I2CM.BAUD.bit.BAUD = SystemCoreClock / (2 * baudrate) - 7;      			// Set I2C master SCL baud rate
 #endif	
