@@ -11,6 +11,7 @@
 	V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
 	V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
 	V1.1.5 -- Activate internal pull-up resistors and increase driver strength
+	V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
 
   The MIT License (MIT)
 
@@ -46,7 +47,7 @@ class I2C_DMAC {
 		I2C_DMAC(SERCOM* s, uint8_t pinSDA, uint8_t pinSCL);			// Class constructor to initialise, SERCOM class, pins and member variables
 		void begin();																							// Begin with 100kHz I2C bus clock speed and 8-bit register address mode
 		void begin(uint32_t baudrate);														// Begin with specified baud rate and 8-bit register address mode
-		void begin(uint32_t baudrate, uint8_t regAddrMode);				// Begin with specified baud rate and register address mode
+		void begin(uint32_t baudrate, uint8_t regAddrMode, EPioType ulPeripheral);		// Begin with specified baud rate and register address mode
 		void end();																								// Tear down and tidy up resources
 		void setClock(uint32_t baudrate);													// Set the I2C bus clock speed to the specified baud rate
 		void setWriteChannel(uint8_t channel);										// Set the DMAC write channel number (0 - 11), default 0
