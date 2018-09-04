@@ -3,6 +3,7 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 
 ### __Version__
 
+- Version V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
 - Version V1.1.5 -- Activate internal pull-up resistors and increase driver strength
 - Version V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
 - Version V1.1.3 -- Fixed issue with consecutive calls to writeByte() overwriting data
@@ -33,6 +34,10 @@ Simply include the I2C_DMAC.h file at the beginning of your sketch:
 The I2C_DMAC object is created (instantiated) automatically and the object can be called using the I2C prefix, for example:
 
 **_I2C.begin();_**
+
+Note that for the Metro M4 board it is necessary to specify that the I2C port is using the alternative SERCOM (SERCOM_ALT), as well as specifying either an 8-bit or 16-bit register address:
+
+**_I2C.begin(400000, REG_ADDR_8BIT, PIO_SERCOM_ALT);_**
 
 The I2C_DMAC library's functions operate in the following way:
 
