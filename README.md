@@ -1,7 +1,7 @@
 # I2C_DMAC
 Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Access Controller (DMAC).
 
-### __Version__
+## __Version__
 
 - Version V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
 - Version V1.1.5 -- Activate internal pull-up resistors and increase driver strength
@@ -12,7 +12,7 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 - Version V1.1.0 -- Add Arduino MKR and SAMD51 support, plus multiple I2C instances 
 - Version V1.0.0 -- Intial release
 
-### __Arduino Compatibility__
+## __Arduino Compatibility__
 
 - Arduino/Genuino Zero
 - Arduino Zero Pro
@@ -21,27 +21,44 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 - Arduino MKR Series
 - Support for SAMD51 microcontrollers using Adafruit's Metro/Feather M4 core code
 
-### __Installation__
+## __Installation__
 
 After download simply un-zip the file and place the DMAC and I2C_DMAC directories in your ...Arduino/libraries folder. The Arduino folder is the one where your sketches are usually located.
 
-### __Usage__
+## __Usage__
+
+### __I2C_DMAC Library__
 
 Simply include the I2C_DMAC.h file at the beginning of your sketch:
 
-**_#include <I2C_DMAC.h>_**
+```
+#include <I2C_DMAC.h>
+```
+---
+
+### __Initialisation__
 
 The I2C_DMAC object is created (instantiated) automatically and the object can be called using the I2C prefix, for example:
 
-**_I2C.begin();_**
+```
+I2C.begin();
+```
 
 Note that for the Metro M4 board it is necessary to specify that the I2C port is using the alternative SERCOM (SERCOM_ALT), as well as specifying either an 8-bit or 16-bit register address:
 
-**_I2C.begin(400000, REG_ADDR_8BIT, PIO_SERCOM_ALT);_**
+```
+I2C.begin(400000, REG_ADDR_8BIT, PIO_SERCOM_ALT);
+```
+---
+
+### __Reading and Writing__
 
 The I2C_DMAC library's functions operate in the following way:
 
-The "init" functions simply set up the DMAC prior to transfer, while the "read" and "write" functions do the actual transmission.
+The "init" functions simply set up the DMAC prior to transfer, while the "read" and "write" functions do the actual transmission:
+
+
+
 
 All the other read and write functions are just a combination of the these three base level operations.
 
@@ -74,13 +91,58 @@ It's possible to initialise the DMAC only one time and then continuouly call the
 
 To allow the sketch to check if the DMAC read or write operation is complete it's necessary to poll the respective busy flags:
 
-**_while(I2C.writeBusy);_**
+```
+while(I2C.writeBusy);
+```
 
 It's also possible to allocate callback functions that are executed when a read or write has completed, or when an error occurs.
 
 The DMAC_Handler() and SERCOM3_Handler are provided as weak linker symbols allowing them to be overriden in your sketch for inclusion of your own handler functions, should that be necessary.
 
 The latest version includes support for mulitple I2C instances, provided the instances are assigned different DMAC channels. A demonstration sketch: "MPU6050_Gyroscope_V2.ino", using two MPU6050 gyroscope/accelerometer devices is included in the example code.
+
+---
+
+### __Code Implementation__
+
+An example of accessing the WHO_AM_I register on the MPU6050 gyroscope/accelerometer using the three levels of functions provided by the I2C_DMAC library
+
+```#include <I2C_DMAC.h>
+
+#define MPU6050_ADDRESS 0x68                         // Device address when ADO = 0
+#define WHO_AM_I        0x75                         // Should return 0x68
+
+void setup() 
+{
+  SerialUSB.begin(115200);                           // Activate the native USB port
+  while(!SerialUSB);                                 // Wait for the native USB to be ready
+
+  // Combined DMAC initialisation, write and read
+  I2C.begin(400000);                                 // Start I2C bus at 400kHz
+  I2C.readByte(MPU6050_ADDRESS, WHO_AM_I);           // Read the WHO_AM_I register 
+  while(I2C.readBusy);                               // Wait for synchronization  
+  SerialUSB.println(I2C.getData(), HEX);             // Output the result
+
+  // Or combined DMAC and write initialisation, followed by read
+  I2C.writeRegAddr(MPU6050_ADDRESS, WHO_AM_I);       // Write the register address
+  I2C.readByte(MPU6050_ADDRESS);                     // Read the WHO_AM_I register
+  while(I2C.readBusy);                               // Wait for synchronization
+  SerialUSB.println(I2C.getData(), HEX);             // Output the result
+
+  // Or indpendent DMAC initialisation, write and read
+  I2C.initWriteRegAddr(MPU6050_ADDRESS, WHO_AM_I);   // Initialise the DMAC write
+  I2C.initReadByte(MPU6050_ADDRESS);                 // Initialise the DMAC read
+  I2C.write();                                       // Write the register address
+  while(I2C.writeBusy);                              // Wait for synchronization
+  I2C.read();                                        // Read the WHO_AM_I register
+  while(I2C.readBusy);                               // Wait for synchronization
+  SerialUSB.println(I2C.getData(), HEX);             // Output the result 
+}
+
+void loop() {}
+```
+
+---
 
 ### __Example Code__
 
