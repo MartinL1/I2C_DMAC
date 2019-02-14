@@ -59,7 +59,6 @@ The "init" functions simply set up the DMAC prior to transfer, while the "read" 
 
 
 
-
 All the other read and write functions are just a combination of the these three base level operations.
 
 The write functions allow for the transmission of the device address, plus the following options:
@@ -79,9 +78,20 @@ The read functions allow for the transmission of the device address, plus the re
 - Device Address -> 1 Data Byte
 - Device Address -> Data -> Data Count (bytes)
 
-Single bytes of data are handled by the library, meaning that you can simply enter constants as a single byte of data without having to allocate any memory. This is useful for configuring an I2C device.
+Single bytes of data are handled by the library, meaning that you can simply enter constants as a single byte of data without having to allocate any memory. This is useful for configuring an I2C device:
 
-A block of data can be a simple array and needs to be declared and "in scope" for the duration of the transfer. The block data size is limited to 255 bytes of data, (including the register address length). This limitation in imposed by the hardware.
+```
+I2C.begin(400000);                                 // Start I2C bus at 400kHz
+I2C.readByte(MPU6050_ADDRESS, WHO_AM_I);           // Read the WHO_AM_I register 
+while(I2C.readBusy);                               // Wait for synchronization
+SerialUSB.println(I2C.getData(), HEX);             // Output the result
+```
+
+A block of data can be a simple array and needs to be declared and "in scope" for the duration of the transfer. The block data size is limited to 255 bytes of data, (including the register address length). This limitation in imposed by the hardware:
+
+```
+
+```
 
 Note that the I2C_DMAC doesn't use a ring buffer like the standard Wire library, it simply allows you to send and receive data from memory already allocated in your program. This also makes it more efficient as it isn't necessary to pull data off the ring buffer, the data is instead transfer directly to where you specify.
 
