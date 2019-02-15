@@ -23,7 +23,7 @@ Arduino Zero (SAMD21) based non-blocking I2C library using the Direct Memory Acc
 
 ## __Installation__
 
-After download simply un-zip the file and place the DMAC and I2C_DMAC directories in your ...Arduino/libraries folder. The Arduino folder is the one where your sketches are usually located.
+After download simply un-zip the file and place the I2C_DMAC directory in your ...Arduino/libraries folder. The Arduino folder is the one where your sketches are usually located.
 
 ## __Usage__
 
