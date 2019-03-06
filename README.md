@@ -80,10 +80,9 @@ The read functions allow for the transmission of the device address, plus the re
 - Device Address -> 1 Data Byte
 - Device Address -> Data -> Data Count (bytes)
 
-Single bytes of data are handled by the library, meaning that you can simply enter constants as a single byte of data without having to allocate any memory. This is useful for configuring an I2C device:
+Single bytes of data are handled by the library, meaning that you can simply enter constants as a single byte of data without having to allocate any memory. This is useful for configuring an I2C device or reading single 8-bit registers:
 
 ```
-I2C.begin(400000);                                 // Start I2C bus at 400kHz
 I2C.readByte(MPU6050_ADDRESS, WHO_AM_I);           // Read the WHO_AM_I register 
 while(I2C.readBusy);                               // Wait for synchronization
 SerialUSB.println(I2C.getData(), HEX);             // Output the result
@@ -92,7 +91,13 @@ SerialUSB.println(I2C.getData(), HEX);             // Output the result
 A block of data can be a simple array and needs to be declared and "in scope" for the duration of the transfer. The block data size is limited to 255 bytes of data, (including the register address length). This limitation in imposed by the hardware:
 
 ```
-
+I2C.readBytes(MPU6050_ADDRESS, GYRO_XOUT_H, data, 6);           // Read the data registers 
+while(I2C.readBusy);                               							// Wait for synchronization
+SerialUSB.print((int16_t)((data[0] << 8) | data[1]));     			// Display the raw gyroscope values
+SerialUSB.print(F("   "));
+SerialUSB.print((int16_t)((data[2] << 8) | data[3]));
+SerialUSB.print(F("   "));
+SerialUSB.println((int16_t)((data[4] << 8) | data[5]));
 ```
 
 Note that the I2C_DMAC doesn't use a ring buffer like the standard Wire library, it simply allows you to send and receive data from memory already allocated in your program. This also makes it more efficient as it isn't necessary to pull data off the ring buffer, the data is instead transfer directly to where you specify.
@@ -158,4 +163,4 @@ void loop() {}
 
 ### __Example Code__
 
-The examples directory includes I2C_DMAC example code for the MPU6050 gyroscope/accelerometer device.
+The examples directory includes I2C_DMAC example code for the MPU6050 gyroscope/accelerometer device. (Note that Adafruit boards use Serial rather than SerialUSB for console communications).
