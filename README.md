@@ -5,7 +5,7 @@ This library employs the SAMD21/SAMD51's DMAC module to transfer data to and fro
 
 The library was originally designed to significantly increase the performance of the Arduino compatible, I2C sensor based Falcon 1 and 2 mutli-rotor (drone) flight controllers:
 
-<img src="https://static.rcgroups.net/forums/attachments/6/0/1/5/8/7/a9606835-172-FalconDiagSmall.png" alt="Falcon Flight Controllers" width="50%" height="50%"><img src="https://static.rcgroups.net/forums/attachments/6/0/1/5/8/7/a9606837-83-Falcon2Setup.png" alt="Falcon 2 Flight Controller" width="50%" height="50%">
+<img src="https://static.rcgroups.net/forums/attachments/6/0/1/5/8/7/a9606835-172-FalconDiagSmall.png" alt="Falcon Flight Controllers" width="320" height="240"><img src="https://static.rcgroups.net/forums/attachments/6/0/1/5/8/7/a9606837-83-Falcon2Setup.png" alt="Falcon 2 Flight Controller" width="320" height="240">
 
 ## __Version__
 
