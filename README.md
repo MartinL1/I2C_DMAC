@@ -163,4 +163,6 @@ void loop() {}
 
 ### __Example Code__
 
-The examples directory includes I2C_DMAC example code for the MPU6050 gyroscope/accelerometer device. (Note that Adafruit boards use Serial rather than SerialUSB for console communications).
+The examples directory includes I2C_DMAC example code for the MPU6050 gyroscope/accelerometer device. 
+
+(Note that Adafruit boards use Serial rather than SerialUSB for console communications).
