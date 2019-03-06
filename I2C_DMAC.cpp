@@ -12,6 +12,7 @@
 	V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
 	V1.1.5 -- Activate internal pull-up resistors and increase driver strength
 	V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
+	
 	The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
