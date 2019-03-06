@@ -91,9 +91,9 @@ SerialUSB.println(I2C.getData(), HEX);             // Output the result
 A block of data can be a simple array and needs to be declared and "in scope" for the duration of the transfer. The block data size is limited to 255 bytes of data, (including the register address length). This limitation in imposed by the hardware:
 
 ```
-I2C.readBytes(MPU6050_ADDRESS, GYRO_XOUT_H, data, 6);           // Read the data registers 
-while(I2C.readBusy);                               							// Wait for synchronization
-SerialUSB.print((int16_t)((data[0] << 8) | data[1]));     			// Display the raw gyroscope values
+I2C.readBytes(MPU6050_ADDRESS, GYRO_XOUT_H, data, 6);      // Read the data registers 
+while(I2C.readBusy);                                       // Wait for synchronization
+SerialUSB.print((int16_t)((data[0] << 8) | data[1]));      // Display the raw gyroscope values
 SerialUSB.print(F("   "));
 SerialUSB.print((int16_t)((data[2] << 8) | data[3]));
 SerialUSB.print(F("   "));
