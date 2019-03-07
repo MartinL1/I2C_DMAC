@@ -1,7 +1,7 @@
 # I2C_DMAC
 Arduino Zero (SAMD21/SAMD51) based non-blocking I2C library using the Direct Memory Access Controller (DMAC). 
 
-This library employs the SAMD21/SAMD51's DMAC module to transfer data to and from I2C sensors or EEPROM, while simultaneously freeing up the CPU to perform other calculations in the meantime. In time critical applications this can lead to a significant boost in processor performance. 
+This library employs the SAMD21/SAMD51's DMAC module to transfer data to and from I2C sensors or EEPROM, while simultaneously freeing up the CPU to perform other calculations concurrently. In time critical applications this can lead to a significant boost in processor performance. 
 
 This library was originally designed to significantly increase the performance of the Arduino compatible, I2C sensor based Falcon 1 and 2 mutli-rotor (drone) flight controllers:
 
