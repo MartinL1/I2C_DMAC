@@ -6,52 +6,52 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-I2C_DMAC    							KEYWORD1
-I2C												KEYWORD1
+I2C_DMAC	KEYWORD1
+I2C	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-begin											KEYWORD2
-end												KEYWORD2
-setClock									KEYWORD2
-setWriteChannel						KEYWORD2
-setReadChannel						KEYWORD2
-setPriority								KEYWORD2
-setRegAddrMode						KEYWORD2
-initWriteBytes						KEYWORD2
-initWriteByte							KEYWORD2
-initWriteAddrReg 					KEYWORD2
-initReadBytes 						KEYWORD2
-initReadByte 							KEYWORD2
-getData			 							KEYWORD2
-write						 					KEYWORD2
-read						 					KEYWORD2
-writeBytes			 					KEYWORD2
-writeByte				 					KEYWORD2
-writeRegAddr		 					KEYWORD2
-readBytes				 					KEYWORD2
-readByte				 					KEYWORD2
-attachWriteCallback				KEYWORD2
-attachReadCallback				KEYWORD2
-attachDmacErrorCallback		KEYWORD2
+begin	KEYWORD2
+end	KEYWORD2
+setClock	KEYWORD2
+setWriteChannel	KEYWORD2
+setReadChannel	KEYWORD2
+setPriority	KEYWORD2
+setRegAddrMode	KEYWORD2
+initWriteBytes	KEYWORD2
+initWriteByte	KEYWORD2
+initWriteAddrReg	KEYWORD2
+initReadBytes	KEYWORD2
+initReadByte	KEYWORD2
+getData	KEYWORD2
+write	KEYWORD2
+read	KEYWORD2
+writeBytes	KEYWORD2
+writeByte	KEYWORD2
+writeRegAddr	KEYWORD2
+readBytes	KEYWORD2
+readByte	KEYWORD2
+attachWriteCallback	KEYWORD2
+attachReadCallback	KEYWORD2
+attachDmacErrorCallback	KEYWORD2
 attachSercomErrorCallback	KEYWORD2
-detackWriteCallback				KEYWORD2
-detachReadCallback				KEYWORD2
-detachDmacErrorCallback		KEYWORD2
-detachSercomErrorCallback KEYWORD2
-DMAC_IrqHandler					 	KEYWORD2
-SERCOM_IrqHandler					KEYWORD2
-writeBusy				 					KEYWORD2
-readBusy				 					KEYWORD2
-i2cDmacPtrs								KEYWORD2
-instanceCounter						KEYWORD2
+detackWriteCallback	KEYWORD2
+detachReadCallback	KEYWORD2
+detachDmacErrorCallback	KEYWORD2
+detachSercomErrorCallback	KEYWORD2
+DMAC_IrqHandler	KEYWORD2
+SERCOM_IrqHandler	KEYWORD2
+writeBusy	KEYWORD2
+readBusy	KEYWORD2
+i2cDmacPtrs	KEYWORD2
+instanceCounter	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
 
-REG_ADDR_8BIT							LITERAL1
-REG_ADDR_16BIT 						LITERAL1
+REG_ADDR_8BIT	LITERAL1
+REG_ADDR_16BIT LITERAL1
 
