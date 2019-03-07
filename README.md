@@ -9,6 +9,7 @@ This library was originally designed to significantly increase the performance o
 
 ## __Version__
 
+- Verison V1.1.7 -- Arduino IDE library manager release
 - Version V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
 - Version V1.1.5 -- Activate internal pull-up resistors and increase driver strength
 - Version V1.1.4 -- Allow the DMAC to resume normal operation after an early NACK is received
