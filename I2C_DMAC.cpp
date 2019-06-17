@@ -13,6 +13,7 @@
 	V1.1.5 -- Activate internal pull-up resistors and increase driver strength
 	V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
   V1.1.7 -- Arduino IDE library manager release
+	V1.1.8 -- Code optimisation
 	
 	The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -280,11 +281,7 @@ void I2C_DMAC::setClock(uint32_t baudrate)
 {
 	sercom->I2CM.CTRLA.bit.ENABLE = 0;            													// Disable SERCOM3 in I2C master mode
   while (sercom->I2CM.SYNCBUSY.bit.ENABLE);     													// Wait for synchronization
-#if __SAMD51__
-  sercom->I2CM.BAUD.bit.BAUD = SERCOM_FREQ_REF / (2 * baudrate) - 7;      			// Set I2C master SCL baud rate
-#else
-	sercom->I2CM.BAUD.bit.BAUD = SystemCoreClock / (2 * baudrate) - 7;      			// Set I2C master SCL baud rate
-#endif	
+  sercom->I2CM.BAUD.bit.BAUD = SERCOM_FREQ_REF / (2 * baudrate) - 7;      // Set I2C master SCL baud rate
 	sercom->I2CM.CTRLA.bit.ENABLE = 1 ;           													// Enable SERCOM3 in I2C master mode
   while (sercom->I2CM.SYNCBUSY.bit.ENABLE);     													// Wait for synchronization
 }
@@ -565,7 +562,7 @@ void I2C_DMAC::detachDmacErrorCallback()
 
 void I2C_DMAC::detachSercomErrorCallback()
 {
-	errorDmacCallback = 0;							// Detach the SERCOM error callback function
+	errorSercomCallback = 0;						// Detach the SERCOM error callback function
 }
 
 void I2C_DMAC::DMAC_IrqHandler()
@@ -661,30 +658,11 @@ void DMAC_0_Handler() 														// The DMAC_0_Handler() ISR
 {
 	I2C_DMAC::DMAC_IrqHandler();										// Call the I2C_DMAC's DMAC interrupt handler member function
 }
-
-void DMAC_1_Handler() __attribute__((weak));			// Set as weakly declared linker symbol, so that the function can be overriden
-void DMAC_1_Handler() 														// The DMAC_1_Handler() ISR
-{
-  I2C_DMAC::DMAC_IrqHandler();										// Call the I2C_DMAC's DMAC interrupt handler member function											
-}
-
-void DMAC_2_Handler() __attribute__((weak));			// Set as weakly declared linker symbol, so that the function can be overriden
-void DMAC_2_Handler() 														// The DMAC_2_Handler() ISR
-{
-  I2C_DMAC::DMAC_IrqHandler();										// Call the I2C_DMAC's DMAC interrupt handler member function
-}
-
-void DMAC_3_Handler() __attribute__((weak));			// Set as weakly declared linker symbol, so that the function can be overriden
-void DMAC_3_Handler() 														// The DMAC_3_Handler() ISR
-{
-  I2C_DMAC::DMAC_IrqHandler();										// Call the I2C_DMAC's DMAC interrupt handler member function
-}
-
-void DMAC_4_Handler() __attribute__((weak));			// Set as weakly declared linker symbol, so that the function can be overriden
-void DMAC_4_Handler() 														// The DMAC_4_Handler() ISR
-{
-	I2C_DMAC::DMAC_IrqHandler();										// Call the I2C_DMAC's DMAC interrupt handler member function
-}
+// Set the DMAC Handler function for the other DMAC channels, assign to weak aliases
+void DMAC_1_Handler(void) __attribute__((weak, alias("DMAC_0_Handler")));
+void DMAC_2_Handler(void) __attribute__((weak, alias("DMAC_0_Handler")));
+void DMAC_3_Handler(void) __attribute__((weak, alias("DMAC_0_Handler")));
+void DMAC_4_Handler(void) __attribute__((weak, alias("DMAC_0_Handler")));
 #else
 void DMAC_Handler() __attribute__((weak));				// Set as weakly declared linker symbol, so that the function can be overriden
 void DMAC_Handler() 															// The DMAC_Handler() ISR
