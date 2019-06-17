@@ -13,6 +13,7 @@
 	V1.1.5 -- Activate internal pull-up resistors and increase driver strength
 	V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
 	V1.1.7 -- Arduino IDE library manager release
+	V1.1.8 -- Code optimisation
 	
   The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
