@@ -53,5 +53,5 @@ instanceCounter	KEYWORD2
 #######################################
 
 REG_ADDR_8BIT	LITERAL1
-REG_ADDR_16BIT LITERAL1
+REG_ADDR_16BIT	LITERAL1
 
