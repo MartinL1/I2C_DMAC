@@ -9,6 +9,7 @@ This library was originally designed to significantly increase the performance o
 
 ## __Version__
 
+- Version V1.1.9 -- Use default arguments for begin() member function
 - Verison V1.1.8 -- Fix bug in Sercom detach callback function and other code optimisations
 - Verison V1.1.7 -- Arduino IDE library manager release
 - Version V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
