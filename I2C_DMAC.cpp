@@ -14,6 +14,7 @@
 	V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
   V1.1.7 -- Arduino IDE library manager release
 	V1.1.8 -- Code optimisation
+	V1.1.9 -- Use default arguments for begin() member function
 	
 	The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -198,16 +199,6 @@ void I2C_DMAC::begin(uint32_t baudrate, uint8_t regAddrMode, EPioType ulPeripher
 	
 	i2cDmacPtrs[instanceCounter++] = this;				 // Copy the pointer to "this" object to the I2C_DMAC pointer array
 }																								 // and increment the instance counter
-
-void I2C_DMAC::begin(uint32_t baudrate)
-{
-	begin(baudrate, REG_ADDR_8BIT, PIO_SERCOM);			// Set baud rate, but default to 8-bit register address mode
-}
-
-void I2C_DMAC::begin()
-{
-	begin(100000);											// Set default I2C baud rate to 100kHz and default to 8-bit register address mode
-}
 
 //
 // Tear down and tidy up resources
