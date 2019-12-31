@@ -14,6 +14,7 @@
 	V1.1.6 -- Add SERCOM ALT (alternative) peripheral switch for the Metro M4
 	V1.1.7 -- Arduino IDE library manager release
 	V1.1.8 -- Code optimisation
+	V1.1.9 -- Use default arguments for begin() member function
 	
   The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -44,9 +45,9 @@ enum { REG_ADDR_8BIT = 1, REG_ADDR_16BIT };										// Register address mode de
 class I2C_DMAC {
 	public:
 		I2C_DMAC(SERCOM* s, uint8_t pinSDA, uint8_t pinSCL);			// Class constructor to initialise, SERCOM class, pins and member variables
-		void begin();																							// Begin with 100kHz I2C bus clock speed and 8-bit register address mode
-		void begin(uint32_t baudrate);														// Begin with specified baud rate and 8-bit register address mode
-		void begin(uint32_t baudrate, uint8_t regAddrMode, EPioType ulPeripheral);		// Begin with specified baud rate and register address mode
+		void begin(uint32_t baudrate = 100000, 										// Begin with 100kHz default clock rate and 8-bit register address mode
+							 uint8_t regAddrMode = REG_ADDR_8BIT, 
+							 EPioType ulPeripheral = PIO_SERCOM);
 		void end();																								// Tear down and tidy up resources
 		void setClock(uint32_t baudrate);													// Set the I2C bus clock speed to the specified baud rate
 		void setWriteChannel(uint8_t channel);										// Set the DMAC write channel number (0 - 11), default 0
