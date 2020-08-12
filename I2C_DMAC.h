@@ -15,6 +15,7 @@
 	V1.1.7 -- Arduino IDE library manager release
 	V1.1.8 -- Code optimisation
 	V1.1.9 -- Use default arguments for begin() member function
+	V1.1.10 -- Remove I2C instance on writeBusy flag in ReadByte() and ReadBytes() functions
 	
   The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
