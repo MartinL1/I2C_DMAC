@@ -15,6 +15,7 @@
   V1.1.7 -- Arduino IDE library manager release
 	V1.1.8 -- Code optimisation
 	V1.1.9 -- Use default arguments for begin() member function
+	V1.1.10 -- Remove I2C instance on writeBusy flag in ReadByte() and ReadBytes() functions
 	
 	The MIT License (MIT)
 	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -498,14 +499,14 @@ void I2C_DMAC::readByte(uint8_t devAddress)
 void I2C_DMAC::readBytes(uint8_t devAddress, uint16_t regAddress, uint8_t* data, uint8_t count)
 {
 	writeRegAddr(devAddress, regAddress);				// Set the register address on the I2C slave device
-	while(I2C.writeBusy);												// Wait for the write to complete
+	while(writeBusy);														// Wait for the write to complete
 	readBytes(devAddress, data, count);					// Receive the returned data
 }
 
 void I2C_DMAC::readByte(uint8_t devAddress, uint16_t regAddress)
 {
 	writeRegAddr(devAddress, regAddress);				// Set the register address on the I2C slave device
-	while(I2C.writeBusy);												// Wait for the write to complete
+	while(writeBusy);														// Wait for the write to complete
 	readByte(devAddress);												// Receive the returned data byte
 }
 
