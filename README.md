@@ -9,6 +9,7 @@ This library was originally designed to significantly increase the performance o
 
 ## __Version__
 
+- Verison V1.1.11 -- Arduino IDE library manager release
 - Version V1.1.10 -- Remove I2C instance on writeBusy flag in ReadByte() and ReadBytes() functions
 - Version V1.1.9 -- Use default arguments for begin() member function
 - Verison V1.1.8 -- Fix bug in Sercom detach callback function and other code optimisations
